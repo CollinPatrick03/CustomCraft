@@ -4,3 +4,7 @@ main: me.collinpatrick.customcraft.CustomCraft
 api-version: 1.19
 authors: [ CollinPatrick ]
 description: A plugin created by the Energy Drink Coders team for random fixes into minecraft
+commands:
+  moo:
+    description: Moos
+    usage: /<command>
