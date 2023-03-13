@@ -5,6 +5,6 @@ api-version: 1.19
 authors: [ CollinPatrick ]
 description: A plugin created by the Energy Drink Coders team for random fixes into minecraft
 commands:
-  moo:
-    description: Moos
+  testWrite:
+    description: Test the writeout
     usage: /<command>
