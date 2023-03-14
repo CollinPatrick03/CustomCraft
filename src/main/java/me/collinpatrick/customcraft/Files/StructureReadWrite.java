@@ -12,23 +12,21 @@ public class StructureReadWrite {
     private String filePathBase = "";
 
     public void structureWriteOut(String absolutePath, String fileName, JSONArray writeList) {
-        try{
-            System.out.println("Made it to making the directory");
-            System.out.println("/default" + absolutePath);
-            File directory = new File("/default" + absolutePath);
-            Files.createDirectory(directory.toPath());
-
-            System.out.println("Made it to making the json file");
-            System.out.println("/default" + absolutePath + "/" + fileName);
-            File file = new File("/default" + absolutePath + "/" + fileName);
-            file.createNewFile();
+        //check if the Folder has been made
+        File dirFolder = new File(absolutePath);
+        dirFolder.mkdir();
 
 
-            System.out.println("Made it to the writer");
-            FileWriter fr = new FileWriter(file);
-            System.out.println(fileName);
+        try {
+            File fileOut = new File(absolutePath + "/" + fileName);
+            //Check if fileOut is already there
+            boolean made = fileOut.createNewFile();
+            System.out.println(writeList.toJSONString());
+            FileWriter fr = new FileWriter(fileOut);
             fr.write(writeList.toJSONString());
             fr.flush();
+            fr.close();
+
         }
         catch(IOException e) {
             e.printStackTrace();

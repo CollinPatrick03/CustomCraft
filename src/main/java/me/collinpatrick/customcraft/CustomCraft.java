@@ -16,7 +16,7 @@ public final class CustomCraft extends JavaPlugin {
     public void onEnable() {
         playerRecipes.initRecipes();
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(playerRecipes), this);
-        getCommand("testWrite").setExecutor(new Commands(this));
+        getCommand("generateFirstStruct").setExecutor(new Commands(this));
     }
     @Override
     public void onDisable() {
