@@ -5,6 +5,18 @@ api-version: 1.19
 authors: [ CollinPatrick ]
 description: A plugin created by the Energy Drink Coders team for random fixes into minecraft
 commands:
-  generateFirstStruct:
-    description: Test the writeout
+  CoordinateWriteOut:
+    description: Write a coordinate to a file
+    usage: /<command, xPos, yPos, zPos, name of the place>
+
+  CoordinatesReadIn:
+    description: Read in and see all coordinates saved
+    usage: /<command>
+
+  Track:
+    description: Track a player using a compass
+    usage: /<command Player>
+
+  Untrack:
+    description: Untracks the player on your compass
     usage: /<command>

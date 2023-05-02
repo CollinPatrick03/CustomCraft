@@ -11,6 +11,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class RecipeContainer {
@@ -55,6 +56,7 @@ public class RecipeContainer {
         createCustomDiamondHorseArmorRecipe();
         createCustomNameTagRecipe();
         createCustomSaddleRecipe();
+        createCustomEnchantedGoldenAppleRecipe();
     }
 
     public void createCustomFurnaceRecipes() {
@@ -159,5 +161,18 @@ public class RecipeContainer {
         ));
         nameTagRecipe.setIngredient('L', Material.LEATHER);
         this.addCustomShapedRecipes(nameTagRecipe);
+    }
+
+    private void createCustomEnchantedGoldenAppleRecipe() {
+        ItemStack enchantedGoldenApple = new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 1);
+        ShapedRecipe enchantedGoldenAppleRecipe = new ShapedRecipe(new NamespacedKey(p, "enchantedGoldenApple"), enchantedGoldenApple);
+        enchantedGoldenAppleRecipe.shape(
+                "GGG",
+                "GAG",
+                "GGG"
+        );
+        enchantedGoldenAppleRecipe.setIngredient('G', Material.GOLD_BLOCK);
+        enchantedGoldenAppleRecipe.setIngredient('A', Material.APPLE);
+        this.addCustomShapedRecipes(enchantedGoldenAppleRecipe);
     }
 }

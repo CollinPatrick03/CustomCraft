@@ -1,9 +1,12 @@
 package me.collinpatrick.customcraft.Files;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.json.simple.*;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 
@@ -31,6 +34,14 @@ public class StructureReadWrite {
         catch(IOException e) {
             e.printStackTrace();
         }
+
+    }
+    public void buildAStruct(CommandSender sender) {
+        Player p = sender.getServer().getPlayer(sender.getName());
+        
+    }
+
+    public void structureReadIn(String absolutePath, String fileName) {
 
     }
 
