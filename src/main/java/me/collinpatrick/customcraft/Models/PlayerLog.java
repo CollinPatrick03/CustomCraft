@@ -1,6 +1,6 @@
 package me.collinpatrick.customcraft.Models;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class PlayerLog {
     String name;
@@ -55,5 +55,12 @@ public class PlayerLog {
 
     public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public void addKill() {
+        this.kills++;
+    }
+    public void addDeath() {
+        this.deaths++;
     }
 }
