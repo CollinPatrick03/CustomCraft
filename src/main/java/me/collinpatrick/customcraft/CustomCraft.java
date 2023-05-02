@@ -1,19 +1,17 @@
 package me.collinpatrick.customcraft;
 import me.collinpatrick.customcraft.Listeners.PlayerJoinListener;
+import me.collinpatrick.customcraft.Models.PlayerLog;
 import me.collinpatrick.customcraft.RecipesContainer.RecipeContainer;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.collinpatrick.customcraft.Listeners.Commands.Commands;
-import me.collinpatrick.customcraft.SqlLogging.SqlSetup;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import me.collinpatrick.customcraft.SqlLogging.SqlRepo;
 
 import java.io.File;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public final class CustomCraft extends JavaPlugin {
     RecipeContainer playerRecipes = new RecipeContainer(this);
-    SqlSetup sqlSetup = new SqlSetup();
+    SqlRepo sqlSetup = new SqlRepo();
 
     @Override
     public void onEnable() {
@@ -23,6 +21,15 @@ public final class CustomCraft extends JavaPlugin {
         dirFolder.mkdir();
         //Init the sql
         sqlSetup.initialSetup();
+
+        try{
+            PlayerLog playerLog = sqlSetup.getPlayerLogByName("DoctorParadox");
+            System.out.println(playerLog.getKills());
+        }
+        catch(SQLException e) {
+            System.out.println("THIS SHIT FUCKED UP");
+            e.printStackTrace();
+        }
 
         //Initializing recipes
         playerRecipes.initRecipes();

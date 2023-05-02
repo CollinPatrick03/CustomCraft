@@ -34,15 +34,19 @@ public class Commands implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("CoordinateWriteOut")) {
             cRW.CoordinatesWriteOut(this.absolutePath, args, sender);
+
         }
         else if(command.getName().equalsIgnoreCase("CoordinatesReadIn")) {
             cRW.CoordinateReadIn(this.absolutePath, args, sender);
+
         }
         else if(command.getName().equalsIgnoreCase("Track")) {
             trackerHandler.TrackerTaskBuilder(args, sender);
+
         }
         else if(command.getName().equalsIgnoreCase("Untrack")) {
             trackerHandler.CancelTrackingTask(sender);
+
         }
 
         return true;
