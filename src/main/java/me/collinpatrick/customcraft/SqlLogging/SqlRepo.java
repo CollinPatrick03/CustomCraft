@@ -1,10 +1,13 @@
 package me.collinpatrick.customcraft.SqlLogging;
 import me.collinpatrick.customcraft.Models.BlockLog;
 import me.collinpatrick.customcraft.Models.CommandLog;
+import me.collinpatrick.customcraft.Models.Coordinates;
 import me.collinpatrick.customcraft.Models.PlayerLog;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.units.qual.C;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SqlRepo {
@@ -28,7 +31,9 @@ public class SqlRepo {
             String commandLogsCreation = ("CREATE TABLE IF NOT EXISTS commandLogs(commandLogId int NOT NULL AUTO_INCREMENT PRIMARY KEY,nameOfCaller varchar(60),command varchar(100))");
             String tradeLogsCreation = ("CREATE TABLE IF NOT EXISTS tradeLogs(tradeId int NOT NULL AUTO_INCREMENT PRIMARY KEY,nameOfTrader1 varchar(60), nameOfTrader2 varchar(60), trader1Item varchar(30), trader2Item varchar(30), trader1ItemAmount int, trader2ItemAmount int, dayOfTrade DATE)");
             String blockLogsCreation = ("CREATE TABLE IF NOT EXISTS blockLogs(blockLogId int NOT NULL AUTO_INCREMENT PRIMARY KEY, nameOfBlock varchar(45), playerInvolved varchar(60), placeOrBreak bit,date DATE, xPos double, yPos double, zPos double)");
+            String coordinateLogsCreation = ("CREATE TABLE IF NOT EXISTS coordinateLogs(name varchar(40) PRIMARY KEY, nameOfCreator varchar(60), xPos double, yPos double, zPos double, date DATE)");
 
+            databaseStatement.execute(coordinateLogsCreation);
             databaseStatement.execute(playerLogsTableCreation);
             databaseStatement.execute(commandLogsCreation);
             databaseStatement.execute(tradeLogsCreation);
@@ -61,7 +66,6 @@ public class SqlRepo {
                 long blocksBroken = resultSet.getLong("blocksBroken");
                 Date lastLogin = resultSet.getDate("lastLogin");
                 PlayerLog playerLog = new PlayerLog(userName, deaths, kills, blocksBroken, lastLogin);
-                this.databaseStatement.close();
                 return playerLog;
             }
             else {
@@ -140,6 +144,63 @@ public class SqlRepo {
             e.printStackTrace();
             return false;
 
+        }
+    }
+
+    public boolean writeCoordinatesOut(Coordinates c) {
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement("REPLACE INTO coordinateLogs(name, nameOfCreator, xPos, yPos, zPos, date) VALUES (?,?,?,?,?,?)");
+            preparedStatement.setString(1, c.getNameOfCoordinates());
+            preparedStatement.setString(2, c.getNameOfCreator());
+            preparedStatement.setDouble(3, c.getxPos());
+            preparedStatement.setDouble(4, c.getyPos());
+            preparedStatement.setDouble(5, c.getzPos());
+            preparedStatement.setDate(6, c.getDate());
+            preparedStatement.executeUpdate();
+            return true;
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public ArrayList<Coordinates> getCoordinateByPlayerName(String playerName) {
+        ArrayList<Coordinates> coordinatesList = new ArrayList<Coordinates>();
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM coordinateLogs WHERE nameOfCreator = ?");
+            preparedStatement.setString(1, playerName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                coordinatesList.add(new Coordinates(resultSet.getString(1), resultSet.getString(2), resultSet.getDouble(3), resultSet.getDouble(4), resultSet.getDouble(5), resultSet.getDate(6)));
+            }
+            if(coordinatesList.size() == 0) {
+                return null;
+            }
+            return coordinatesList;
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<Coordinates> getAllCoordinates() {
+        ArrayList<Coordinates> coordinatesList = new ArrayList<Coordinates>();
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM coordinateLogs");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                coordinatesList.add(new Coordinates(resultSet.getString(1), resultSet.getString(2), resultSet.getDouble(3), resultSet.getDouble(4), resultSet.getDouble(5), resultSet.getDate(6)));
+            }
+            if(coordinatesList.size() == 0) {
+                return null;
+            }
+            return coordinatesList;
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

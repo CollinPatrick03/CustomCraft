@@ -19,7 +19,7 @@ public final class CustomCraft extends JavaPlugin {
     public void onEnable() {
         //Make sure the folder for the plugin is there
         File dirFolder = new File(this.getDataFolder().getAbsolutePath());
-        Commands commandExecuter = new Commands(this);
+        Commands commandExecuter = new Commands(this, loggingHandler);
         dirFolder.mkdir();
         //Init the sql
         sqlSetup.initialSetup();
@@ -27,8 +27,8 @@ public final class CustomCraft extends JavaPlugin {
         playerRecipes.initRecipes();
 
         //Initializing the listeners
-        getServer().getPluginManager().registerEvents(new PlayerListener(playerRecipes), this);
-        getServer().getPluginManager().registerEvents(new BlockInteractListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerListener(playerRecipes,loggingHandler), this);
+        getServer().getPluginManager().registerEvents(new BlockInteractListener(loggingHandler), this);
         getServer().getPluginManager().registerEvents(new ChatCommandListener(), this);
 
         //Initializing commands
@@ -36,6 +36,7 @@ public final class CustomCraft extends JavaPlugin {
         this.getCommand("CoordinatesReadIn").setExecutor(commandExecuter);
         this.getCommand("Track").setExecutor(commandExecuter);
         this.getCommand("Untrack").setExecutor(commandExecuter);
+        this.getCommand("PlayerLog").setExecutor(commandExecuter);
 
 
     }

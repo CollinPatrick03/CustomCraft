@@ -1,75 +1,80 @@
 package me.collinpatrick.customcraft.Models;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import org.bukkit.ChatColor;
+
+import java.sql.Date;
 
 public class Coordinates {
-    private Double xPos;
-    private Double yPos;
-    private Double zPos;
-    private String nameOfCreator;
-    private String nameOfCoords;
-    private String dateCreated;
-    private SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+    String nameOfCoordinates;
+    String nameOfCreator;
+    double xPos;
+    double yPos;
+    double zPos;
+    Date date;
+
     public Coordinates() {
 
     }
 
-    public Coordinates(Double xPos, Double yPos, Double zPos, String nameOfCoords, String nameOfCreator, Date dateCreated) {
+    public Coordinates(String nameOfCoordinates, String nameOfCreator, double xPos, double yPos, double zPos, Date date) {
+        this.nameOfCoordinates = nameOfCoordinates;
+        this.nameOfCreator = nameOfCreator;
         this.xPos = xPos;
         this.yPos = yPos;
         this.zPos = zPos;
-        this.nameOfCoords = nameOfCoords;
-        this.nameOfCreator = nameOfCreator;
-        this.dateCreated = format.format(dateCreated);
+        this.date = date;
+    }
+    @Override
+    public String toString() {
+        return (ChatColor.DARK_PURPLE + "[" + this.nameOfCoordinates + "] [" + this.nameOfCreator + "] [" + this.date.toString() + "]" + ChatColor.AQUA + " [" + this.xPos + ", " + this.yPos + ", " + this.zPos + "]");
     }
 
-    public Double getxPos() {
-        return xPos;
+    public String getNameOfCoordinates() {
+        return nameOfCoordinates;
     }
 
-    public Double getyPos() {
-        return yPos;
-    }
-
-    public Double getzPos() {
-        return zPos;
-    }
-
-    public String getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(String dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setNameOfCoordinates(String nameOfCoordinates) {
+        this.nameOfCoordinates = nameOfCoordinates;
     }
 
     public String getNameOfCreator() {
         return nameOfCreator;
     }
 
-
-    public void setName(String name) {
-        this.nameOfCreator = name;
+    public void setNameOfCreator(String nameOfCreator) {
+        this.nameOfCreator = nameOfCreator;
     }
 
-    public void setxPos(Double xPos) {
+    public double getxPos() {
+        return xPos;
+    }
+
+    public void setxPos(double xPos) {
         this.xPos = xPos;
     }
 
-    public void setyPos(Double yPos) {
+    public double getyPos() {
+        return yPos;
+    }
+
+    public void setyPos(double yPos) {
         this.yPos = yPos;
     }
 
-    public void setzPos(Double zPos) {
+    public double getzPos() {
+        return zPos;
+    }
+
+    public void setzPos(double zPos) {
         this.zPos = zPos;
     }
 
-    public String getNameOfCoords() {
-        return nameOfCoords;
+    public Date getDate() {
+        return date;
     }
 
-    public void setNameOfCoords(String nameOfCoords) {
-        this.nameOfCoords = nameOfCoords;
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

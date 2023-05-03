@@ -3,6 +3,8 @@ package me.collinpatrick.customcraft.Listeners;
 import me.collinpatrick.customcraft.RecipesContainer.RecipeContainer;
 import me.collinpatrick.customcraft.SqlLogging.LoggingHandler;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,16 +15,15 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener implements Listener {
     RecipeContainer customRecipesContainer;
-    LoggingHandler loggingHandler = new LoggingHandler();
+    LoggingHandler loggingHandler;
 
-    public PlayerListener(RecipeContainer r) {
+    public PlayerListener(RecipeContainer r, LoggingHandler loggingHandler) {
         customRecipesContainer = r;
-        System.out.println("MADE IT TO THE LISTENER?");
+        this.loggingHandler = loggingHandler;
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        System.out.println("MADE IT TO THE PJE");
         Player p = event.getPlayer();
 
         p.discoverRecipes(this.customRecipesContainer.getKeys());
@@ -32,16 +33,23 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        loggingHandler.removePlayerFromHashMap(event.getPlayer().getName());
+        Player p = event.getPlayer();
+
+        loggingHandler.removePlayerFromHashMap(p.getName());
     }
 
     @EventHandler
     public void onEntityKill(EntityDeathEvent event) {
-        Entity dead = event.getEntity();
-        if(dead.getLastDamageCause() instanceof Player) {
-            Player p = (Player) dead.getLastDamageCause();
+        System.out.println("Made it to the death event");
+        LivingEntity entity = event.getEntity();
+        try {
+            Player p = entity.getKiller();
             loggingHandler.addKillForPlayer(p.getName());
         }
+        catch(NullPointerException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

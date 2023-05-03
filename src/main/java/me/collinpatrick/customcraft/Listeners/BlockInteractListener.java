@@ -2,7 +2,6 @@ package me.collinpatrick.customcraft.Listeners;
 
 import me.collinpatrick.customcraft.Models.BlockLog;
 import me.collinpatrick.customcraft.SqlLogging.LoggingHandler;
-import me.collinpatrick.customcraft.SqlLogging.SqlRepo;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,8 +11,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 public class BlockInteractListener implements Listener {
 
-    LoggingHandler loggingHandler = new LoggingHandler();
-    public BlockInteractListener() {
+    LoggingHandler loggingHandler;
+    public BlockInteractListener(LoggingHandler loggingHandler) {
+        this.loggingHandler = loggingHandler;
     }
 
     @EventHandler
@@ -23,6 +23,7 @@ public class BlockInteractListener implements Listener {
         java.util.Date utilDate = new java.util.Date();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         BlockLog blockLog = new BlockLog(0, b.getType().name(), p.getName(),true, sqlDate, b.getX(), b.getY(), b.getZ());
+        loggingHandler.addBlockBrokenForPlayer(p.getName());
         loggingHandler.writeBlockEvent(blockLog);
     }
 

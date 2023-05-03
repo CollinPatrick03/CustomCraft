@@ -20,3 +20,7 @@ commands:
   Untrack:
     description: Untracks the player on your compass
     usage: /<command>
+
+  PlayerLog:
+    description: Returns a log on a given player
+    usage: /<command Player>

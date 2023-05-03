@@ -1,5 +1,7 @@
 package me.collinpatrick.customcraft.Models;
 
+import org.bukkit.ChatColor;
+
 import java.sql.Date;
 
 public class PlayerLog {
@@ -62,5 +64,14 @@ public class PlayerLog {
     }
     public void addDeath() {
         this.deaths++;
+    }
+
+    public void addBlockBroken() {
+        this.blocksBroken++;
+    }
+
+    @Override
+    public String toString() {
+        return (ChatColor.AQUA + "[Name: " + this.name + "] [Deaths: " + this.deaths + "] \n[Kills: " + this.kills + "] [Blocks broken: " + this.blocksBroken + "] \n[LastLogin: " + this.lastLogin.toString() + "]");
     }
 }
